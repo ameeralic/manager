@@ -106,6 +106,39 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
+## This Application — Hostinger Shared Hosting
+
+This application is hosted on **Hostinger** (shared hosting, Premium plan) at **https://manager.ameer.website**.
+
+### Infrastructure
+
+- **Host:** 178.16.136.207, SSH port 65002, username `u291482380`
+- **App directory:** `~/domains/manager.ameer.website/app/` (git repo cloned here)
+- **Web root:** `~/domains/manager.ameer.website/public_html/` → symlink to `app/public/`
+- **PHP:** 8.3.30 via `/opt/alt/php83/usr/bin/php` (use this binary for all SSH artisan/composer commands)
+- **Database:** MySQL — `u291482380_manager`, username `u291482380_root`, host `localhost`
+- **GitHub repo:** `https://github.com/ameeralic/manager`
+
+### Auto-Deploy Pipeline
+
+Pushing to the `main` branch triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`) that:
+1. SSHs into the server using secrets `SSH_HOST`, `SSH_USERNAME`, `SSH_PRIVATE_KEY`, `SSH_PORT`
+2. Runs `git fetch origin main && git reset --hard origin/main`
+3. Runs `composer install --no-dev`
+4. Runs `php artisan migrate --force`
+5. Rebuilds config/route/view caches
+
+### Hostinger MCP
+
+A **Hostinger MCP server** (`hostinger-api-mcp`) is configured in `.claude/settings.json` and available for managing hosting resources (domains, DNS, websites). Use it to create subdomains, update DNS records, or inspect the hosting account — prefer it over manual hPanel actions.
+
+### Key Notes for Troubleshooting
+
+- The `.env` on the server is **not in git** — it must be configured manually on the server via SSH if ever redeployed from scratch.
+- The `DB_PASSWORD` in `.env` must be **quoted** (`DB_PASSWORD="..."`) because it contains `#` which `.env` parsers treat as a comment.
+- `composer.json` has `"platform": {"php": "8.3.0"}` so Composer resolves PHP 8.3-compatible packages (symfony 7.x). Do not remove this.
+- If a deploy fails with a merge conflict, SSH in and run `git fetch origin && git reset --hard origin/main` manually.
+
 === laravel/core rules ===
 
 # Do Things the Laravel Way
