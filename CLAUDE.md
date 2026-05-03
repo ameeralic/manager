@@ -18,6 +18,12 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
 - phpunit/phpunit (PHPUNIT) - v12
+- inertiajs/inertia-laravel (INERTIA) - v3
+- tightenco/ziggy (ZIGGY) - v2
+- vue (VUE) - v3
+- @inertiajs/vue3 - v2
+- tailwindcss (TAILWIND) - v4
+- vite (VITE) - v8
 
 ## Skills Activation
 
@@ -175,6 +181,44 @@ A **Hostinger MCP server** (`hostinger-api-mcp`) is configured in `.claude/setti
 
 - If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
 - Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
+
+=== frontend/vilt rules ===
+
+# Frontend — VILT Stack (Vue 3 + Inertia.js + Laravel + Tailwind CSS)
+
+## Architecture
+
+This application is a **server-driven SPA** using Inertia.js. There is no separate API — Laravel handles routing and passes data directly as Inertia page props. Do not build REST endpoints for frontend data needs; pass props via `Inertia::render()` instead.
+
+## File Structure
+
+- `resources/js/Pages/` — one `.vue` file per route (e.g. `Home.vue`, `Dashboard.vue`). Page names must match the first argument of `Inertia::render()`.
+- `resources/js/Layouts/` — shared layout components (e.g. `AppLayout.vue`).
+- `resources/views/app.blade.php` — the single root Blade template. Do not create additional Blade views for Inertia pages.
+
+## Routing
+
+- All routes use `Inertia::render('PageName', $props)` and must be named.
+- Use the `route()` helper in Vue (provided by Ziggy via `ZiggyVue` plugin) for named route links. Do not hardcode URL strings.
+- Use `<Link>` from `@inertiajs/vue3` instead of `<a>` tags for internal navigation — this enables SPA navigation without full page reloads.
+
+## Components & Conventions
+
+- Use Vue 3 `<script setup>` syntax exclusively. Do not use the Options API.
+- Import `AppLayout` (or any layout) directly inside the page component and wrap the template with it — do not use `defineOptions({ layout })`.
+- The `@` alias resolves to `resources/js/`. Use it for all imports: `import AppLayout from '@/Layouts/AppLayout.vue'`.
+- Use Tailwind CSS utility classes for all styling. Do not write custom CSS unless absolutely necessary.
+
+## Passing Data from Laravel to Vue
+
+- Pass data as the second argument to `Inertia::render()`: `Inertia::render('Users/Index', ['users' => UserResource::collection($users)])`.
+- Declare received props with `defineProps` in `<script setup>`.
+- Shared data available on every page (e.g. auth user) belongs in `HandleInertiaRequests::share()`.
+
+## Building & Hot Reload
+
+- Run `composer run dev` to start the full dev stack (server + queue + logs + Vite HMR).
+- Run `npm run build` before committing to verify the production build is clean.
 
 === phpunit/core rules ===
 
