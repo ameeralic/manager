@@ -1,3 +1,8 @@
+AddType x-mapp-php84 .php
+<IfModule litespeed>
+    AddType x-mapp-php84 .php
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
