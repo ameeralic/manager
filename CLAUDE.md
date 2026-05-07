@@ -35,6 +35,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing a new one.
 
+## Git Branching
+
+- Feature branches must follow the convention: `arc/feature-<name-of-feature-in-4-words>` (e.g. `arc/feature-user-auth-login-flow`).
+
 ## Verification Scripts
 
 - Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
@@ -237,5 +241,9 @@ This application is a **server-driven SPA** using Inertia.js. There is no separa
 - To run all tests: `php artisan test --compact`.
 - To run all tests in a file: `php artisan test --compact tests/Feature/ExampleTest.php`.
 - To filter on a particular test name: `php artisan test --compact --filter=testName` (recommended after making a change to a related file).
+
+## Project Preference
+
+- **Do not write tests for new features unless explicitly requested.** This is a personal home manager app; the overhead of maintaining a test suite is not desired.
 
 </laravel-boost-guidelines>
