@@ -15,7 +15,7 @@ class ExpenseController extends Controller
 {
     public function index(Request $request): Response
     {
-        $query = Expense::with(['category:id,name,color', 'paymentMethod:id,name', 'tags:id,name'])
+        $query = Expense::with(['category:id,name', 'paymentMethod:id,name', 'tags:id,name'])
             ->orderByDesc('created_at');
 
         if ($request->filled('date_from')) {
@@ -53,7 +53,8 @@ class ExpenseController extends Controller
     public function create(): Response
     {
         return Inertia::render('Expenses/Create', [
-            'categories' => ExpenseCategory::with('tags:id,name')->orderBy('name')->get(['id', 'name', 'color']),
+            'categories' => ExpenseCategory::orderBy('name')->get(['id', 'name']),
+            'tags' => ExpenseTag::orderBy('name')->get(['id', 'name']),
             'paymentMethods' => PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }
@@ -87,7 +88,8 @@ class ExpenseController extends Controller
     {
         return Inertia::render('Expenses/Edit', [
             'expense' => $expense->load(['category', 'paymentMethod', 'tags:id,name']),
-            'categories' => ExpenseCategory::with('tags:id,name')->orderBy('name')->get(['id', 'name', 'color']),
+            'categories' => ExpenseCategory::orderBy('name')->get(['id', 'name']),
+            'tags' => ExpenseTag::orderBy('name')->get(['id', 'name']),
             'paymentMethods' => PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }

@@ -1,15 +1,19 @@
 <template>
     <AppLayout>
         <div class="max-w-xl mx-auto px-6 py-10">
-            <h1 class="text-xl font-semibold text-gray-900 dark:text-white mb-8">Add Expense</h1>
+            <h1 class="text-2xl font-bold text-notes-text mb-8">Add Expense</h1>
 
             <form @submit.prevent="submit">
-                <ExpenseForm :form="form" :categories="categories" :paymentMethods="paymentMethods" />
+                <ExpenseForm :form="form" :categories="categories" :tags="tags" :paymentMethods="paymentMethods" />
 
                 <button
                     type="submit"
                     :disabled="form.processing"
+<<<<<<< HEAD
                     class="mt-8 w-full py-3 rounded-xl bg-notes-yellow text-amber-900 font-semibold text-sm hover:opacity-90 active:scale-[.99] transition-all disabled:opacity-50"
+=======
+                    class="mt-8 w-full py-3 rounded-xl bg-notes-yellow text-amber-900 font-bold text-base hover:opacity-90 active:scale-[.99] transition-all disabled:opacity-50"
+>>>>>>> feature/manager-16-expenses-edit-form-and-update-action
                 >
                     Save Expense
                 </button>
@@ -25,6 +29,7 @@ import ExpenseForm from '@/Components/Expenses/ExpenseForm.vue';
 
 defineProps({
     categories: Array,
+    tags: Array,
     paymentMethods: Array,
 });
 
