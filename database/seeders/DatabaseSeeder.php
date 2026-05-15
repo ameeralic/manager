@@ -14,5 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         User::firstOrCreate(['name' => 'Ameer'], ['pin' => '080524']);
         User::firstOrCreate(['name' => 'Jinsi'], ['pin' => '100395']);
+
+        $this->call([
+            PaymentMethodSeeder::class,
+            ExpenseCategorySeeder::class,
+            ExpenseTagSeeder::class,
+        ]);
     }
 }
