@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ExpenseCategory;
 use App\Models\ExpenseTag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +13,9 @@ class ExpenseTagController extends Controller
     public function index(): Response
     {
         return Inertia::render('ExpenseTags/Index', [
-            'tags' => ExpenseTag::with('categories:id,name')
-                ->withCount('expenses')
+            'tags' => ExpenseTag::withCount('expenses')
                 ->orderBy('name')
                 ->get(),
-            'categories' => ExpenseCategory::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -26,15 +23,9 @@ class ExpenseTagController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:expense_tags,name'],
-            'category_ids' => ['nullable', 'array'],
-            'category_ids.*' => ['integer', 'exists:expense_categories,id'],
         ]);
 
-        $tag = ExpenseTag::create(['name' => $validated['name']]);
-
-        if (! empty($validated['category_ids'])) {
-            $tag->categories()->sync($validated['category_ids']);
-        }
+        ExpenseTag::create($validated);
 
         return back()->with('success', 'Tag created.');
     }
@@ -43,12 +34,9 @@ class ExpenseTagController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:expense_tags,name,'.$expenseTag->id],
-            'category_ids' => ['nullable', 'array'],
-            'category_ids.*' => ['integer', 'exists:expense_categories,id'],
         ]);
 
-        $expenseTag->update(['name' => $validated['name']]);
-        $expenseTag->categories()->sync($validated['category_ids'] ?? []);
+        $expenseTag->update($validated);
 
         return back()->with('success', 'Tag updated.');
     }
