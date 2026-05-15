@@ -15,11 +15,6 @@ class ExpenseTag extends Model
     /** @var list<string> */
     protected $fillable = ['name'];
 
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(ExpenseCategory::class, 'expense_category_expense_tag');
-    }
-
     public function expenses(): BelongsToMany
     {
         return $this->belongsToMany(Expense::class, 'expense_expense_tag');

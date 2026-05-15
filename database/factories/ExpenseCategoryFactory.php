@@ -19,7 +19,6 @@ class ExpenseCategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->word(),
-            'color' => fake()->optional()->hexColor(),
         ];
     }
 }

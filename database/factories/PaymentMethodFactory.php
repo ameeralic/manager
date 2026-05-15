@@ -19,6 +19,7 @@ class PaymentMethodFactory extends Factory
     {
         return [
             'name' => fake()->unique()->word(),
+            'paid_by' => fake()->randomElement(['Ameer', 'Jinsi']),
         ];
     }
 }
