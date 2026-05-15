@@ -1,7 +1,7 @@
 <template>
     <div class="notes-app min-h-screen flex flex-col">
         <!-- Top bar -->
-        <header class="notes-header h-12 flex items-center px-5 border-b border-black/8 sticky top-0 z-10">
+        <header class="notes-header h-12 flex items-center px-5 border-b border-white/8 sticky top-0 z-10">
             <div class="flex-1 flex items-center gap-2">
                 <div class="w-6 h-6 rounded-md bg-notes-yellow flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-amber-800" viewBox="0 0 24 24" fill="currentColor">
@@ -17,7 +17,7 @@
                 <span class="text-xs text-notes-secondary">{{ auth.user?.name }}</span>
                 <button
                     @click="logout"
-                    class="text-xs text-notes-secondary hover:text-notes-text transition-colors px-2 py-1 rounded-md hover:bg-black/5"
+                    class="text-sm font-medium text-notes-secondary hover:text-notes-text transition-colors px-2 py-1 rounded-md hover:bg-white/5"
                 >
                     Sign out
                 </button>
@@ -27,15 +27,15 @@
         <!-- Body -->
         <div class="flex flex-1 overflow-hidden">
             <!-- Desktop sidebar -->
-            <aside class="hidden md:flex flex-col w-56 shrink-0 bg-white dark:bg-gray-900 border-r border-black/8 dark:border-white/8">
+            <aside class="notes-sidebar hidden md:flex flex-col w-56 shrink-0 border-r border-white/8">
                 <nav class="flex-1 py-3 px-2 space-y-0.5">
                     <!-- Dashboard -->
                     <Link
                         :href="route('dashboard')"
-                        class="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors"
+                        class="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-base font-medium transition-colors"
                         :class="isActive('/dashboard')
-                            ? 'bg-black/8 dark:bg-white/8 text-gray-900 dark:text-white font-medium'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'"
+                            ? 'bg-white/8 text-notes-text'
+                            : 'text-notes-secondary hover:bg-white/5 hover:text-notes-text'"
                     >
                         <!-- House icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,10 +49,10 @@
                     <div>
                         <button
                             @click="expenseGroupOpen = !expenseGroupOpen"
-                            class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-base font-medium transition-colors"
                             :class="isOnExpenseSection
-                                ? 'text-gray-900 dark:text-white font-medium'
-                                : 'text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'"
+                                ? 'text-notes-text'
+                                : 'text-notes-secondary hover:bg-white/5 hover:text-notes-text'"
                         >
                             <!-- Receipt icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -68,40 +68,40 @@
                             </svg>
                         </button>
 
-                        <div v-show="expenseGroupOpen" class="mt-0.5 ml-3 pl-3 border-l border-black/8 dark:border-white/8 space-y-0.5">
+                        <div v-show="expenseGroupOpen" class="mt-0.5 ml-3 pl-3 border-l border-white/8 space-y-0.5">
                             <Link
                                 href="/expenses"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm font-medium transition-colors"
                                 :class="isActive('/expenses')
-                                    ? 'bg-black/8 dark:bg-white/8 text-gray-900 dark:text-white font-medium'
-                                    : 'text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'"
+                                    ? 'bg-white/8 text-notes-text'
+                                    : 'text-notes-secondary hover:bg-white/5 hover:text-notes-text'"
                             >
                                 Expenses
                             </Link>
                             <Link
                                 href="/expense-categories"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm font-medium transition-colors"
                                 :class="isActive('/expense-categories')
-                                    ? 'bg-black/8 dark:bg-white/8 text-gray-900 dark:text-white font-medium'
-                                    : 'text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'"
+                                    ? 'bg-white/8 text-notes-text'
+                                    : 'text-notes-secondary hover:bg-white/5 hover:text-notes-text'"
                             >
                                 Categories
                             </Link>
                             <Link
                                 href="/expense-tags"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm font-medium transition-colors"
                                 :class="isActive('/expense-tags')
-                                    ? 'bg-black/8 dark:bg-white/8 text-gray-900 dark:text-white font-medium'
-                                    : 'text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'"
+                                    ? 'bg-white/8 text-notes-text'
+                                    : 'text-notes-secondary hover:bg-white/5 hover:text-notes-text'"
                             >
                                 Tags
                             </Link>
                             <Link
                                 href="/payment-methods"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm font-medium transition-colors"
                                 :class="isActive('/payment-methods')
-                                    ? 'bg-black/8 dark:bg-white/8 text-gray-900 dark:text-white font-medium'
-                                    : 'text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'"
+                                    ? 'bg-white/8 text-notes-text'
+                                    : 'text-notes-secondary hover:bg-white/5 hover:text-notes-text'"
                             >
                                 Payment Methods
                             </Link>
@@ -117,13 +117,11 @@
         </div>
 
         <!-- Mobile bottom nav -->
-        <nav class="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 border-t border-black/8 dark:border-white/8 flex">
+        <nav class="notes-sidebar md:hidden fixed bottom-0 left-0 right-0 z-20 border-t border-white/8 flex">
             <Link
                 :href="route('dashboard')"
-                class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs transition-colors"
-                :class="isActive('/dashboard')
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-400 dark:text-gray-500'"
+                class="flex-1 flex flex-col items-center gap-0.5 py-2 text-sm font-medium transition-colors"
+                :class="isActive('/dashboard') ? 'text-notes-text' : 'text-notes-secondary'"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -133,10 +131,8 @@
             </Link>
             <Link
                 href="/expenses"
-                class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs transition-colors"
-                :class="isOnExpenseSection
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-400 dark:text-gray-500'"
+                class="flex-1 flex flex-col items-center gap-0.5 py-2 text-sm font-medium transition-colors"
+                :class="isOnExpenseSection ? 'text-notes-text' : 'text-notes-secondary'"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
@@ -232,5 +228,9 @@ onMounted(() => {
 .notes-header {
     background-color: #2C2C2E;
     border-color: rgba(255, 255, 255, 0.08);
+}
+
+.notes-sidebar {
+    background-color: #252527;
 }
 </style>
