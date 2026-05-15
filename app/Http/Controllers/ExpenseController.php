@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
+use App\Models\ExpenseTag;
 use App\Models\PaymentMethod;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,10 +13,40 @@ use Inertia\Response;
 
 class ExpenseController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $query = Expense::with(['category:id,name,color', 'paymentMethod:id,name', 'tags:id,name'])
+            ->orderByDesc('created_at');
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+        if ($request->filled('category_id')) {
+            $query->where('expense_category_id', $request->category_id);
+        }
+        if ($request->filled('tag_ids')) {
+            foreach ($request->tag_ids as $tagId) {
+                $query->whereHas('tags', fn ($q) => $q->where('expense_tags.id', $tagId));
+            }
+        }
+        if ($request->filled('paid_by')) {
+            $query->where('paid_by', $request->paid_by);
+        }
+        if ($request->filled('payment_method_id')) {
+            $query->where('payment_method_id', $request->payment_method_id);
+        }
+
+        $expenses = $query->paginate(20)->withQueryString();
+
         return Inertia::render('Expenses/Index', [
-            'expenses' => [],
+            'expenses' => $expenses,
+            'filters' => $request->only(['date_from', 'date_to', 'category_id', 'tag_ids', 'paid_by', 'payment_method_id']),
+            'categories' => ExpenseCategory::orderBy('name')->get(['id', 'name']),
+            'tags' => ExpenseTag::orderBy('name')->get(['id', 'name']),
+            'paymentMethods' => PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
