@@ -24,7 +24,6 @@ class ExpenseCategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:expense_categories,name'],
-            'color' => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         ]);
 
         ExpenseCategory::create($validated);
@@ -36,7 +35,6 @@ class ExpenseCategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:expense_categories,name,'.$expenseCategory->id],
-            'color' => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         ]);
 
         $expenseCategory->update($validated);
