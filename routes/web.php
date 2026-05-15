@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExpenseCategoryController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpenseTagController;
 use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('expense-categories', ExpenseCategoryController::class)->only(['index', 'store', 'update', 'destroy']);
 
     Route::resource('expense-tags', ExpenseTagController::class)->only(['index', 'store', 'update', 'destroy']);
+
+    Route::resource('expenses', ExpenseController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 });
 
 Route::get('/', fn () => redirect()->route('dashboard'));
