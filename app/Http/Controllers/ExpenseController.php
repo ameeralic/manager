@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
+use App\Models\ExpenseTag;
 use App\Models\PaymentMethod;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class ExpenseController extends Controller
     public function create(): Response
     {
         return Inertia::render('Expenses/Create', [
-            'categories' => ExpenseCategory::with('tags:id,name')->orderBy('name')->get(['id', 'name', 'color']),
+            'categories' => ExpenseCategory::orderBy('name')->get(['id', 'name']),
+            'tags' => ExpenseTag::orderBy('name')->get(['id', 'name']),
             'paymentMethods' => PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }
@@ -56,7 +58,8 @@ class ExpenseController extends Controller
     {
         return Inertia::render('Expenses/Edit', [
             'expense' => $expense->load(['category', 'paymentMethod', 'tags:id,name']),
-            'categories' => ExpenseCategory::with('tags:id,name')->orderBy('name')->get(['id', 'name', 'color']),
+            'categories' => ExpenseCategory::orderBy('name')->get(['id', 'name']),
+            'tags' => ExpenseTag::orderBy('name')->get(['id', 'name']),
             'paymentMethods' => PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }
