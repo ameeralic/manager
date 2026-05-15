@@ -37,7 +37,15 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## Git Branching
 
-- Feature branches must follow the convention: `arc/feature-<name-of-feature-in-4-words>` (e.g. `arc/feature-user-auth-login-flow`).
+- Branch format: `{type}/{issue-identifier}-{issue-title-slug}`
+- Examples:
+  - `feature/manager-12-create-expense-category-model`
+  - `fix/manager-34-fix-expense-form-validation`
+  - `chore/manager-56-setup-github-actions-pipeline`
+- Use `feature/` for new functionality, `fix/` for bugs, `chore/` for
+  infrastructure and DevOps work
+- Always include the Linear issue identifier — it's how Linear links
+  the branch to the issue automatically
 
 ## Verification Scripts
 
@@ -247,3 +255,95 @@ This application is a **server-driven SPA** using Inertia.js. There is no separa
 - **Do not write tests for new features unless explicitly requested.** This is a personal home manager app; the overhead of maintaining a test suite is not desired.
 
 </laravel-boost-guidelines>
+
+## Automated Workflow (Linear → Routine → PR)
+
+This project uses Claude Code Routines triggered by Linear webhooks.
+When running autonomously:
+
+- You are triggered by a Linear issue moving to "In Progress"
+- The issue ID, title, and description are passed in the trigger message
+- You must implement the issue fully and open a PR — that is the definition of "done"
+- Do NOT ask for confirmation or pause mid-task. Make reasonable decisions
+  and document them in the PR description
+- Do NOT push to `main` directly. Always work on a feature branch
+- Do NOT deploy. Deployment is handled automatically by GitHub Actions on merge
+- If something is genuinely ambiguous, make the most reasonable choice,
+  implement it, and note the assumption in the PR body
+
+## Commit Messages
+
+Follow conventional commits with the Linear issue identifier:
+
+- `feat(manager-12): create expense category model and migration`
+- `fix(manager-34): correct validation on expense form amount field`
+- `chore(manager-56): add GitHub Actions deploy workflow`
+
+The final commit before opening the PR must include `Closes MANAGER-XX`
+in the commit body so Linear closes the issue automatically on merge.
+
+## Pull Request Format
+
+Every PR must follow this structure:
+
+**Title:** `[MANAGER-XX] Brief description matching the issue title`
+
+**Body:**
+```
+## What
+[1-2 sentences describing what was implemented]
+
+## How
+[Brief description of the approach taken — models created, routes added,
+Vue components built, etc.]
+
+## Assumptions
+[Any decisions made where the issue was ambiguous]
+
+## Checklist
+- [ ] Migration created and reversible
+- [ ] Model has $fillable defined
+- [ ] Routes are named
+- [ ] Vue component uses <script setup>
+- [ ] Pint formatting passed
+
+Closes MANAGER-XX
+```
+
+## Cloud Environment (Routine Runs)
+
+When running as a Routine on Anthropic's cloud infrastructure:
+
+- There is NO `.env` file. Do not attempt to read or rely on it
+- There is NO database connection. Do not run `php artisan migrate`,
+  `php artisan db:seed`, or any command requiring DB access
+  (migrations run automatically via deploy.yml on merge to main)
+- There is NO Docker/Sail. Use plain `php` and `composer` commands
+- Do NOT run `composer run dev` or `npm run dev` (these start servers)
+- DO run `npm run build` to verify the frontend compiles before opening the PR
+- DO run `vendor/bin/pint --dirty --format agent` on any modified PHP files
+
+## Scope Discipline
+
+- Implement exactly what the Linear issue describes — nothing more
+- Do not refactor code outside the scope of the issue
+- Do not add features that "might be useful later"
+- Do not modify unrelated files unless a bug forces it
+- If you notice something broken outside the issue scope, add a comment
+  in the PR body under "Noticed but out of scope" — don't fix it
+
+## Before Opening a PR
+
+Run through this in order:
+
+1. **Self-review for simplicity** — review all files you changed and ask:
+   - Is there a simpler way to achieve the same result?
+   - Is there any duplicated logic that could reuse existing code?
+   - Are there any unnecessary abstractions or over-engineered patterns?
+   - Apply any improvements found before continuing
+2. `vendor/bin/pint --dirty --format agent` — fix PHP formatting
+3. `npm run build` — verify frontend compiles clean
+4. Remove any `dd()`, `dump()`, `console.log()`, or debug statements
+5. Confirm branch name matches the `{type}/manager-{id}-{slug}` convention
+6. Confirm the final commit body contains `Closes MANAGER-XX`
+7. Open the PR
