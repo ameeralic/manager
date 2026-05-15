@@ -12,6 +12,8 @@
             </div>
 
             <div class="flex items-center gap-3">
+                <span class="text-xs text-notes-secondary tabular-nums">{{ currentTime }}</span>
+                <span class="text-notes-secondary/30 text-xs">|</span>
                 <span class="text-xs text-notes-secondary">{{ auth.user?.name }}</span>
                 <button
                     @click="logout"
@@ -30,10 +32,41 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
 import { usePage, router } from '@inertiajs/vue3';
 
 const page = usePage();
 const auth = page.props.auth;
+
+const currentTime = ref('');
+let intervalId = null;
+
+const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+function formatDateTime(date) {
+    const day = dayNames[date.getDay()];
+    const month = monthNames[date.getMonth()];
+    const d = date.getDate();
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    return `${day}, ${d} ${month} ${year} — ${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+onMounted(() => {
+    currentTime.value = formatDateTime(new Date());
+    intervalId = setInterval(() => {
+        currentTime.value = formatDateTime(new Date());
+    }, 1000);
+});
+
+onUnmounted(() => {
+    clearInterval(intervalId);
+});
 
 function logout() {
     router.post(route('logout'));
