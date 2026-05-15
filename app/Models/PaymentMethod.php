@@ -13,7 +13,7 @@ class PaymentMethod extends Model
     use HasFactory;
 
     /** @var list<string> */
-    protected $fillable = ['name', 'paid_by'];
+    protected $fillable = ['name'];
 
     public function expenses(): HasMany
     {

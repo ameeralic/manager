@@ -10,19 +10,19 @@ class PaymentMethodSeeder extends Seeder
     public function run(): void
     {
         $methods = [
-            ['name' => 'Cash', 'paid_by' => 'Ameer'],
-            ['name' => 'PhonePe', 'paid_by' => 'Jinsi'],
-            ['name' => 'GooglePay', 'paid_by' => 'Jinsi'],
-            ['name' => 'HDFC CC', 'paid_by' => 'Ameer'],
-            ['name' => 'SBI CC (Ameer)', 'paid_by' => 'Ameer'],
-            ['name' => 'SBI CC (Jinsi)', 'paid_by' => 'Jinsi'],
-            ['name' => 'ICICI CC', 'paid_by' => 'Ameer'],
-            ['name' => 'FederalBank CC', 'paid_by' => 'Ameer'],
-            ['name' => 'InduslandBank CC', 'paid_by' => 'Ameer'],
+            'Cash',
+            'PhonePe',
+            'GooglePay',
+            'HDFC CC',
+            'SBI CC (Ameer)',
+            'SBI CC (Jinsi)',
+            'ICICI CC',
+            'FederalBank CC',
+            'InduslandBank CC',
         ];
 
-        foreach ($methods as $method) {
-            PaymentMethod::firstOrCreate(['name' => $method['name']], ['paid_by' => $method['paid_by']]);
+        foreach ($methods as $name) {
+            PaymentMethod::firstOrCreate(['name' => $name]);
         }
     }
 }
