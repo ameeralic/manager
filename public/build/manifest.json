@@ -1,0 +1,160 @@
+{
+  "_AppLayout-BXgh9Xep.js": {
+    "file": "assets/AppLayout-BXgh9Xep.js",
+    "name": "AppLayout",
+    "imports": [
+      "__plugin-vue_export-helper-S3RvzygF.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/AppLayout-YIvswHT8.css"
+    ]
+  },
+  "_AppLayout-YIvswHT8.css": {
+    "file": "assets/AppLayout-YIvswHT8.css",
+    "src": "_AppLayout-YIvswHT8.css"
+  },
+  "_ExpenseForm-dlG8CJM7.js": {
+    "file": "assets/ExpenseForm-dlG8CJM7.js",
+    "name": "ExpenseForm",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "__plugin-vue_export-helper-S3RvzygF.js": {
+    "file": "assets/_plugin-vue_export-helper-S3RvzygF.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-B8rBkkwd.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/Pages/About.vue": {
+    "file": "assets/About-Bnv0FeMS.js",
+    "name": "About",
+    "src": "resources/js/Pages/About.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/Auth/Login.vue": {
+    "file": "assets/Login-Dmy0wFpF.js",
+    "name": "Login",
+    "src": "resources/js/Pages/Auth/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-S3RvzygF.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/Login-T9QDqfvZ.css"
+    ]
+  },
+  "resources/js/Pages/Dashboard.vue": {
+    "file": "assets/Dashboard-B1uZBMpE.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/ExpenseCategories/Index.vue": {
+    "file": "assets/Index-BCqWwjuh.js",
+    "name": "Index",
+    "src": "resources/js/Pages/ExpenseCategories/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/ExpenseTags/Index.vue": {
+    "file": "assets/Index-6vjb0q_8.js",
+    "name": "Index",
+    "src": "resources/js/Pages/ExpenseTags/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/Expenses/Create.vue": {
+    "file": "assets/Create-BiPAV4uT.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Expenses/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ExpenseForm-dlG8CJM7.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/Expenses/Edit.vue": {
+    "file": "assets/Edit-CGs5Pf_U.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Expenses/Edit.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ExpenseForm-dlG8CJM7.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/Expenses/Index.vue": {
+    "file": "assets/Index-Dj02dnnz.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Expenses/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/Home.vue": {
+    "file": "assets/Home-F-Oa_dKJ.js",
+    "name": "Home",
+    "src": "resources/js/Pages/Home.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/Pages/PaymentMethods/Index.vue": {
+    "file": "assets/Index-BLsz-oWC.js",
+    "name": "Index",
+    "src": "resources/js/Pages/PaymentMethods/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BXgh9Xep.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DacKA_5f.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/About.vue",
+      "resources/js/Pages/Auth/Login.vue",
+      "resources/js/Pages/Dashboard.vue",
+      "resources/js/Pages/ExpenseCategories/Index.vue",
+      "resources/js/Pages/ExpenseTags/Index.vue",
+      "resources/js/Pages/Expenses/Create.vue",
+      "resources/js/Pages/Expenses/Edit.vue",
+      "resources/js/Pages/Expenses/Index.vue",
+      "resources/js/Pages/Home.vue",
+      "resources/js/Pages/PaymentMethods/Index.vue"
+    ]
+  }
+}
